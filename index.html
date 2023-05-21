@@ -42,7 +42,7 @@
             // JSON READING mode.json FILE
         
         // document.getElementById("new-quote").onclick=window.location.reload();
-          fetch("mode.json")
+          fetch("https://type.fit/api/quotes")
                 .then(response => response.json())
                 .then(data =>   { 
                     // console.log(data)[1].author
@@ -50,6 +50,7 @@
 					document.getElementById("author").innerHTML=data[rand].author;
 					document.getElementById("qoute-text").innerHTML=data[rand].text;
                     console.log (rand);
+                    console.log(data[rand]);
 })
 
 
