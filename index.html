@@ -42,7 +42,11 @@
             // JSON READING mode.json FILE
         
         // document.getElementById("new-quote").onclick=window.location.reload();
-          fetch("https://type.fit/api/quotes")
+
+        var online_url="https://type.fit/api/quotes";         //online data
+        var offline_file="mode.json";                          //offline local file
+        
+          fetch(offline_file)
                 .then(response => response.json())
                 .then(data =>   { 
                     // console.log(data)[1].author
