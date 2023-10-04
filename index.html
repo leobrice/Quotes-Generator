@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,23 +8,27 @@
     <title>Quote Generator</title>
     <link rel="icon" href="https://raw.githubusercontent.com/lipis/flag-icons/main/favicon.ico" type="image/png">
     <!-- https://www.google.com/s2/favicons?domain=luso.solutions               luso  -->
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+
+    <!-- Jqery CDN -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
     <!-- Latest compiled and minified CSS -->
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"> -->
 
 </head>
+
 <body>
     <div class="container quote-container mt-5" id="quote-container">
         <div class="author" id="author">
-            <span class="buda" >
-                    Buddha
+            <span class="buda">
+                Buddha
             </span>
             <i class="fa fa-angle-double-right" aria-hidden="true"></i>
         </div>
-        <div class="qoute-text" >
+        <div class="qoute-text">
             <i class="fa fa-quote-left" aria-hidden="true"></i>
             <span class="quotes" id="qoute-text">
                 Whereas disregard and contempt for human rights have resulted
@@ -32,34 +37,79 @@
 
         </div>
         <div class="button-container mt-5">
-            <button type="submit" class="btn btn-outline-success btn-twitter"> <i class="fab fa-twitter" aria-hidden="true"></i> </button>
-            
-            <button type="submit" class="btn btn-outline-success" id="new-quote" onclick="window.location.reload()">New Quote</button>
-            
+            <script>
+                var quote= document.getElementById("qoute-text").innerHTML 
+            </script>
+            <button type="submit" class="btn btn-outline-success btn-twitter"><a href="https://twitter.com/intent/tweet?text=" > <i class="fab fa-twitter"
+                    aria-hidden="true"></i></a> </button>
+
+            <button type="submit" class="btn btn-outline-success" id="new-quote" onclick="window.location.reload()">New
+                Quote</button>
+
         </div>
     </div>
     <script>
-            // JSON READING mode.json FILE
-        
+        // JSON READING mode.json FILE
+
         // document.getElementById("new-quote").onclick=window.location.reload();
 
-        var online_url_endpoint="https://type.fit/api/quotes";         //online data
-        var offline_file_endpoint="mode.json";                          //offline local file
+        var online_url_endpoint = "https://type.fit/api/quotes";         //online data
+        var offline_file_endpoint = "mode.json";                          //offline local file
 
-          fetch(offline_file_endpoint)
-                .then(response => response.json())
-                .then(data =>   { 
-                    // console.log(data)[1].author
-                    var rand=Math.floor((Math.random()*1642) + 1);
-					document.getElementById("author").innerHTML=data[rand].author;
-					document.getElementById("qoute-text").innerHTML=data[rand].text;
-                    console.log (rand);
-                    console.log(data[rand]);
-})          
+        fetch(offline_file_endpoint)
+            .then(response => response.json())
+            .then(data => {
+                // console.log(data)[1].author
+                var rand = Math.floor((Math.random() * 1642) + 1);
+                document.getElementById("author").innerHTML = data[rand].author;
+                document.getElementById("qoute-text").innerHTML = data[rand].text;
+                console.log(rand);
+                console.log(data[rand]);
+            })
         // disabled right click        
-        document.addEventListener('contextmenu',(e) =>e.preventDefault());
+        document.addEventListener('contextmenu', (e) => e.preventDefault());
+            //jquery for exceeded text;
 
     </script>
+    <script>
+
+            $(function () {
+    
+                var maxL = 20;
+
+                $('#quote-text').each(function () {
+                    
+                    var text = $(this).text();
+                    if(text.length > maxL) {
+
+                        var begin = text.substr(0, maxL),
+                            end = text.substr(maxL);
+                    
+                        $(this).html(begin)
+                            .append($('<a class="readmore"/>').attr('href', '#').html('read more...'))
+                            .append($('<div class="hidden" />').html(end));
+
+
+                    }
+
+
+                });
+
+                $(document).on('click', '.readmore', function () {
+            				// $(this).next('.readmore').fadeOut("400");
+                    $(this).next('.hidden').slideToggle(400);
+                })        
+
+
+            })
+
+    </script>
+    <style>
+    #quote-text .more-text{
+        /* display: none; */
+    }
+    </style>
     <script src="scriipt.js"></script>
 </body>
+
 </html>
